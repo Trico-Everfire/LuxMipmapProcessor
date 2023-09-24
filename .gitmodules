@@ -1,0 +1,4 @@
+[submodule "libs/vtflib"]
+	path = libs/vtflib
+	url = https://github.com/Trico-Everfire/VTFLib.git
+	branch = feat/floating_point_support
