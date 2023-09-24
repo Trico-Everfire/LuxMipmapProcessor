@@ -15,8 +15,7 @@
 
 #define log(s) std::cout << s << std::endl;
 
-__gnu_cxx::__normal_iterator<const std::basic_string<char> *, std::vector<std::basic_string<char>>>
-hasParameter(const std::vector<std::string> &argsList, const std::string &arg, const std::string &arg2)
+auto hasParameter(const std::vector<std::string> &argsList, const std::string &arg, const std::string &arg2)
 {
     return std::find_if(argsList.begin(), argsList.end(), [&arg, &arg2](const std::string& str ){ return str == arg || str == arg2;});
 }
