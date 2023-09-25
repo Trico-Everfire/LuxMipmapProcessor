@@ -12,7 +12,7 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 add_subdirectory("libs/vtflib")
 
-option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
+set(VTFLIB_STATIC OFF CACHE BOOL "" FORCE)
 
 set_target_properties(
         vtflib PROPERTIES
@@ -21,6 +21,7 @@ set_target_properties(
         RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
 
 include_directories("libs/vtflib/VTFLib")
+include_directories("libs/vtflib/thirdparty/")
 include_directories("libs/stb")
 
 add_executable(LuxMipmapProcessor src/main.cpp libs/stb/stb_image.h)

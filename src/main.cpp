@@ -6,11 +6,7 @@
 #include <regex>
 
 #define STB_IMAGE_IMPLEMENTATION
-
-extern "C"
-{
 #include "stb_image.h"
-}
 
 #include "VTFFile.h"
 
@@ -129,20 +125,23 @@ int main(int argc, char *argv[]) {
         for(int i = 0; i < count; i++)
         {
 
-            auto fileName = std::string();
-            fileName.append(filePath);
-            fileName.append("/");
-            fileName.append(std::regex_replace(*key, mipMapRegex, std::to_string(i)));
-            fileName.append(std::regex_replace(*key, mipFaceRegex, std::to_string(face)));
-            fileName.append(std::regex_replace(*key, mipFrameRegex, std::to_string(frame)));
+            auto imgfileName = std::string();
+            imgfileName.append(filePath);
+            imgfileName.append("/");
+            if((*key).contains("${it}"))
+                imgfileName.append(std::regex_replace(*key, mipMapRegex, std::to_string(i)));
+            if((*key).contains("${fr}"))
+                imgfileName.append(std::regex_replace(*key, mipFaceRegex, std::to_string(face)));
+            if((*key).contains("${fa}"))
+                imgfileName.append(std::regex_replace(*key, mipFrameRegex, std::to_string(frame)));
 
             auto fmt = vtfFile->GetFormat();
 
             int x, y, n;
 
-            if ( !stbi_is_hdr( fileName.c_str() ) )
+            if ( !stbi_is_hdr( imgfileName.c_str() ) )
             {
-                vlByte *data = stbi_load( fileName.c_str(), &x, &y, &n, 4 );
+                vlByte *data = stbi_load( imgfileName.c_str(), &x, &y, &n, 4 );
 
                 if ( !data )
                     return 1;
@@ -163,7 +162,7 @@ int main(int argc, char *argv[]) {
             }
             else
             {
-                float *data = stbi_loadf( fileName.c_str(), &x, &y, &n, 0 );
+                float *data = stbi_loadf( imgfileName.c_str(), &x, &y, &n, 0 );
 
                 if ( !data )
                     return 1;
