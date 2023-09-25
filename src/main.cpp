@@ -130,12 +130,13 @@ int main(int argc, char *argv[]) {
             auto imgfileName = std::string();
             imgfileName.append(filePath);
             imgfileName.append("/");
-            if((*key).contains("${it}"))
-                imgfileName.append(std::regex_replace(*key, mipMapRegex, std::to_string(i)));
-            if((*key).contains("${fr}"))
-                imgfileName.append(std::regex_replace(*key, mipFaceRegex, std::to_string(face)));
-            if((*key).contains("${fa}"))
-                imgfileName.append(std::regex_replace(*key, mipFrameRegex, std::to_string(frame)));
+            imgfileName.append(*key);
+            if(imgfileName.contains("${it}"))
+                imgfileName = (std::regex_replace(imgfileName, mipMapRegex, std::to_string(i)));
+            if(imgfileName.contains("${fr}"))
+                imgfileName = (std::regex_replace(imgfileName, mipFaceRegex, std::to_string(face)));
+            if(imgfileName.contains("${fa}"))
+                imgfileName = (std::regex_replace(imgfileName, mipFrameRegex, std::to_string(frame)));
 
             auto fmt = vtfFile->GetFormat();
 
