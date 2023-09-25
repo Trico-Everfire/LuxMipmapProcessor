@@ -6,11 +6,15 @@
 #include <regex>
 
 #define STB_IMAGE_IMPLEMENTATION
+
+extern "C"
+{
 #include "stb_image.h"
+}
 
 #include "VTFFile.h"
 
-#define readParam(key, argsList, arg1, arg2) auto key = hasParameter(argsList, arg1, arg2); key != argsList.end()
+#define LMP_readParam(key, argsList, arg1, arg2) auto key = hasParameter(argsList, arg1, arg2); key != argsList.end()
 
 #define LMP_log(s) std::cout << s << std::endl;
 
@@ -35,18 +39,18 @@ int main(int argc, char *argv[]) {
     for(int i = 0; i < argc; i++)
             arguments.emplace_back(argv[i]);
 
-    if(readParam(key, arguments, "-v", "--version"))
+    if(LMP_readParam(key, arguments, "-v", "--version"))
     {
         LMP_log("Insert Help Section Here.");
     }
 
 
-    if(readParam(key, arguments, "-h", "--help"))
+    if(LMP_readParam(key, arguments, "-h", "--help"))
     {
         LMP_log(version);
     }
 
-    if(readParam(key, arguments, "-fa", "--face"))
+    if(LMP_readParam(key, arguments, "-fa", "--face"))
     {
         try {
             face = stoi(*key);
@@ -57,7 +61,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    if(readParam(key, arguments, "-fr", "--frame"))
+    if(LMP_readParam(key, arguments, "-fr", "--frame"))
     {
         try {
             frame = stoi(*key);
@@ -68,7 +72,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    if(readParam(key, arguments, "-i", "--input"))
+    if(LMP_readParam(key, arguments, "-i", "--input"))
     {
         key++;
         vtfFile = std::make_unique<VTFLib::CVTFFile>();
@@ -81,7 +85,7 @@ int main(int argc, char *argv[]) {
         LMP_log(*key);
     }
 
-    if(readParam(key, arguments, "-m", "--mipmaps"))
+    if(LMP_readParam(key, arguments, "-m", "--mipmaps"))
     {
         if(!vtfFile)
         {
