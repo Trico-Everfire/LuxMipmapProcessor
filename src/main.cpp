@@ -50,10 +50,10 @@ int main(int argc, char *argv[]) {
     if(readParam(key, arguments, "-fa", "--face"))
     {
         try {
-            face = stoi(*key.base());
+            face = stoi(*key);
         } catch (...)
         {
-            log("INVALID FACE NUMBER: " << *key.base());
+            log("INVALID FACE NUMBER: " << *key);
             return 1;
         }
     }
@@ -61,10 +61,10 @@ int main(int argc, char *argv[]) {
     if(readParam(key, arguments, "-fr", "--frame"))
     {
         try {
-            frame = stoi(*key.base());
+            frame = stoi(*key);
         } catch (...)
         {
-            log("INVALID FRAME NUMBER: " << *key.base());
+            log("INVALID FRAME NUMBER: " << *key);
             return 1;
         }
     }
@@ -75,11 +75,11 @@ int main(int argc, char *argv[]) {
         vtfFile = std::make_unique<VTFLib::CVTFFile>();
         if(!vtfFile->Load(key->c_str()))
         {
-            log(std::string("Invalid VTF File:") << *key.base());
+            log(std::string("Invalid VTF File:") << *key);
             return 1;
         }
         log("Loaded file:");
-        log(*key.base());
+        log(*key);
     }
 
     if(readParam(key, arguments, "-m", "--mipmaps"))
@@ -93,10 +93,10 @@ int main(int argc, char *argv[]) {
 
         int count;
         try {
-            count = stoi(*key.base());
+            count = stoi(*key);
         } catch (...)
         {
-            log("INVALID MIPMAP NUMBER: " << *key.base());
+            log("INVALID MIPMAP NUMBER: " << *key);
             return 1;
         }
 
@@ -115,7 +115,7 @@ int main(int argc, char *argv[]) {
         if(!std::filesystem::is_directory(key->c_str()) || !std::filesystem::exists(key->c_str()))
             return 1;
 
-        filePath = *key.base();
+        filePath = *key;
 
         key++;
 
@@ -129,9 +129,9 @@ int main(int argc, char *argv[]) {
             auto fileName = std::string();
             fileName.append(filePath);
             fileName.append("/");
-            fileName.append(std::regex_replace(*key.base(), mipMapRegex, std::to_string(i)));
-            fileName.append(std::regex_replace(*key.base(), mipFaceRegex, std::to_string(face)));
-            fileName.append(std::regex_replace(*key.base(), mipFrameRegex, std::to_string(frame)));
+            fileName.append(std::regex_replace(*key, mipMapRegex, std::to_string(i)));
+            fileName.append(std::regex_replace(*key, mipFaceRegex, std::to_string(face)));
+            fileName.append(std::regex_replace(*key, mipFrameRegex, std::to_string(frame)));
 
             auto fmt = vtfFile->GetFormat();
 
