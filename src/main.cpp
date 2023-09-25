@@ -25,6 +25,7 @@ int main(int argc, char *argv[]) {
     std::string version = "Version: 1.0.0";
     int frame = 1;
     int face = 1;
+    std::string filePath;
 
     std::vector<std::string> arguments;
 
@@ -72,6 +73,7 @@ int main(int argc, char *argv[]) {
     {
         key++;
         vtfFile = std::make_unique<VTFLib::CVTFFile>();
+        filePath = *key;
         if(!vtfFile->Load(key->c_str()))
         {
             LMP_log(std::string("Invalid VTF File:") << *key);
@@ -156,7 +158,7 @@ int main(int argc, char *argv[]) {
                 if(!vtfFile->SetCustomMipmap(frame, face, 1, i + 1, newImage.data(), x, y, IMAGE_FORMAT_RGBA8888))
                     return 1;
 
-                vtfFile->Save("/home/trico/Documents/SDX/GithubProjects/LuxMipmapProcessor/lobby_woodwall001a_trim_res.vtf");
+                vtfFile->Save(filePath.c_str());
 
                 stbi_image_free( data );
             }
@@ -174,7 +176,7 @@ int main(int argc, char *argv[]) {
                 if(!vtfFile->SetCustomMipmap(frame, face, 1, i + 1, convertedData, x, y, format))
                     return 1;
 
-                vtfFile->Save("/home/trico/Documents/SDX/GithubProjects/LuxMipmapProcessor/lobby_woodwall001a_trim_res.vtf");
+                vtfFile->Save(filePath.c_str());
 
                 stbi_image_free( data );
             }
