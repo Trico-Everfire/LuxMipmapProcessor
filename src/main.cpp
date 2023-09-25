@@ -12,7 +12,7 @@
 
 #define readParam(key, argsList, arg1, arg2) auto key = hasParameter(argsList, arg1, arg2); key != argsList.end()
 
-#define log(s) std::cout << s << std::endl;
+#define LMP_log(s) std::cout << s << std::endl;
 
 std::vector<std::string>::const_iterator
 hasParameter(const std::vector<std::string> &argsList, const std::string &arg, const std::string &arg2)
@@ -37,13 +37,13 @@ int main(int argc, char *argv[]) {
 
     if(readParam(key, arguments, "-v", "--version"))
     {
-        log("Insert Help Section Here.");
+        LMP_log("Insert Help Section Here.");
     }
 
 
     if(readParam(key, arguments, "-h", "--help"))
     {
-        log(version);
+        LMP_log(version);
     }
 
     if(readParam(key, arguments, "-fa", "--face"))
@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
             face = stoi(*key);
         } catch (...)
         {
-            log("INVALID FACE NUMBER: " << *key);
+            LMP_log("INVALID FACE NUMBER: " << *key);
             return 1;
         }
     }
@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
             frame = stoi(*key);
         } catch (...)
         {
-            log("INVALID FRAME NUMBER: " << *key);
+            LMP_log("INVALID FRAME NUMBER: " << *key);
             return 1;
         }
     }
@@ -74,18 +74,18 @@ int main(int argc, char *argv[]) {
         vtfFile = std::make_unique<VTFLib::CVTFFile>();
         if(!vtfFile->Load(key->c_str()))
         {
-            log(std::string("Invalid VTF File:") << *key);
+            LMP_log(std::string("Invalid VTF File:") << *key);
             return 1;
         }
-        log("Loaded file:");
-        log(*key);
+        LMP_log("Loaded file:");
+        LMP_log(*key);
     }
 
     if(readParam(key, arguments, "-m", "--mipmaps"))
     {
         if(!vtfFile)
         {
-            log("VTF File Not Loaded! \nThe VTF FIle was not loaded.");
+            LMP_log("VTF File Not Loaded! \nThe VTF FIle was not loaded.");
             return 1;
         }
         key++;
@@ -95,7 +95,7 @@ int main(int argc, char *argv[]) {
             count = stoi(*key);
         } catch (...)
         {
-            log("INVALID MIPMAP NUMBER: " << *key);
+            LMP_log("INVALID MIPMAP NUMBER: " << *key);
             return 1;
         }
 
@@ -103,7 +103,7 @@ int main(int argc, char *argv[]) {
 
         if(count > max)
         {
-            log("WARNING: Maximum mipmap level exceeds set mipmap count, discarding excess mipmaps.");
+            LMP_log("WARNING: Maximum mipmap level exceeds set mipmap count, discarding excess mipmaps.");
             count = max;
         }
 
