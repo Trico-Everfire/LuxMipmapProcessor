@@ -4,10 +4,11 @@
 #include <iostream>
 #include <filesystem>
 #include <regex>
-#include "VTFFile.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+
+#include "VTFFile.h"
 
 #define readParam(key, argsList, arg1, arg2) auto key = hasParameter(argsList, arg1, arg2); key != argsList.end()
 
