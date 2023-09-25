@@ -2,8 +2,6 @@
 #include <vector>
 #include <string>
 #include <iostream>
-#include <algorithm>
-#include <memory>
 #include <filesystem>
 #include <regex>
 #include "VTFFile.h"
