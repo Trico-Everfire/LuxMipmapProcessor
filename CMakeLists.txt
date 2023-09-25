@@ -10,9 +10,9 @@ set(CMAKE_INSTALL_RPATH $ORIGIN)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-add_subdirectory("libs/vtflib")
-
 set(VTFLIB_STATIC OFF CACHE BOOL "" FORCE)
+
+add_subdirectory("libs/vtflib")
 
 set_target_properties(
         vtflib PROPERTIES
