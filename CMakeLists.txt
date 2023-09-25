@@ -25,6 +25,10 @@ include_directories("libs/vtflib/thirdparty/")
 include_directories("libs/stb")
 
 add_executable(LuxMipmapProcessor src/main.cpp libs/stb/stb_image.h)
+
+set_property(TARGET LuxMipmapProcessor PROPERTY
+        MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+
 target_link_libraries(LuxMipmapProcessor PRIVATE
         vtflib
         )
