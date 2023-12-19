@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
     std::string version = "Version: 1.0.0";
     int frame = 1;
     int face = 1;
-    std::string filePath;
+    std::string vtfFilePath;
 
     std::vector<std::string> arguments;
 
@@ -73,7 +73,7 @@ int main(int argc, char *argv[]) {
     {
         key++;
         vtfFile = std::make_unique<VTFLib::CVTFFile>();
-        filePath = *key;
+        vtfFilePath = *key;
         if(!vtfFile->Load(key->c_str()))
         {
             LMP_log(std::string("Invalid VTF File:") << *key);
@@ -100,6 +100,8 @@ int main(int argc, char *argv[]) {
             LMP_log("INVALID MIPMAP NUMBER: " << *key);
             return 1;
         }
+
+        vtfFile->GenerateMipmaps(VTFMipmapFilter::MIPMAP_FILTER_BOX, true);
 
         int max = vtfFile->ComputeMipmapCount(vtfFile->GetWidth(), vtfFile->GetHeight(), vtfFile->GetDepth());
 
@@ -149,6 +151,8 @@ int main(int argc, char *argv[]) {
                 if ( !data )
                     return 1;
 
+                std::cout << n;
+
                 vlUInt imgSize = VTFLib::CVTFFile::ComputeImageSize(x, y, 1, fmt);
 
                 std::vector<vlByte> newImage(imgSize);
@@ -156,10 +160,8 @@ int main(int argc, char *argv[]) {
 
                 VTFLib::CVTFFile::Convert( data, newImage.data(),x,y,IMAGE_FORMAT_RGBA8888, fmt);
 
-                if(!vtfFile->SetCustomMipmap(frame, face, 1, i + 1, newImage.data(), x, y, IMAGE_FORMAT_RGBA8888))
+                if(!vtfFile->SetCustomMipmap(frame, face, 1, i + 1, newImage.data(), x, y, fmt))
                     return 1;
-
-                vtfFile->Save(filePath.c_str());
 
                 stbi_image_free( data );
             }
@@ -177,13 +179,13 @@ int main(int argc, char *argv[]) {
                 if(!vtfFile->SetCustomMipmap(frame, face, 1, i + 1, convertedData, x, y, format))
                     return 1;
 
-                vtfFile->Save(filePath.c_str());
-
                 stbi_image_free( data );
             }
 
-            
+
         }
+
+        vtfFile->Save(vtfFilePath.c_str());
 
     }
 
