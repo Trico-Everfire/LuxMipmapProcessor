@@ -50,10 +50,10 @@ int main(int argc, char *argv[]) {
     if(LMP_readParam(key, arguments, "-fa", "--face"))
     {
         try {
-            face = stoi(*key);
+            face = stoi(*(key+1));
         } catch (...)
         {
-            LMP_log("INVALID FACE NUMBER: " << *key);
+            LMP_log("INVALID FACE NUMBER: " << *(key+1));
             return 1;
         }
     }
@@ -61,10 +61,10 @@ int main(int argc, char *argv[]) {
     if(LMP_readParam(key, arguments, "-fr", "--frame"))
     {
         try {
-            frame = stoi(*key);
+            frame = stoi(*(key+1));
         } catch (...)
         {
-            LMP_log("INVALID FRAME NUMBER: " << *key);
+            LMP_log("INVALID FRAME NUMBER: " << *(key+1));
             return 1;
         }
     }
@@ -160,7 +160,7 @@ int main(int argc, char *argv[]) {
 
                 VTFLib::CVTFFile::Convert( data, newImage.data(),x,y,IMAGE_FORMAT_RGBA8888, fmt);
 
-                if(!vtfFile->SetCustomMipmap(frame, face, 1, i + 1, newImage.data(), x, y, fmt))
+                if(!vtfFile->SetCustomMipmap(frame, face, 1, i, newImage.data(), x, y, fmt))
                     return 1;
 
                 stbi_image_free( data );
@@ -176,7 +176,7 @@ int main(int argc, char *argv[]) {
 
                 tagVTFImageFormat format = n > 3 ? IMAGE_FORMAT_RGBA32323232F : IMAGE_FORMAT_RGB323232F;
 
-                if(!vtfFile->SetCustomMipmap(frame, face, 1, i + 1, convertedData, x, y, format))
+                if(!vtfFile->SetCustomMipmap(frame, face, 1, i, convertedData, x, y, format))
                     return 1;
 
                 stbi_image_free( data );
